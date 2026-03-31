@@ -9,7 +9,7 @@
     </tr>
     {% for pet in pets %}
     <tr>
-        <td>{{ pet['id'] }}</td>
+        <td>{{ loop.index }}</td>
         <td>{{ pet['name'] }}</td>
         <td>{{ pet['type'] }}</td>
         <td>{{ pet['age'] }}</td>

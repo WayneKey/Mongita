@@ -55,7 +55,7 @@ def create_pet(data):
         "type":(data.get("type") or "").strip(),
         "age":_normalize_age(data.get("age")),
     })
-    return pet.id
+    return pet.inserted_id
 
 def delete_pet(id):
     pets.delete_one({"_id":id})
@@ -66,11 +66,19 @@ def update_pet(id, data):
     if data["name"].strip()=="":
         raise Exception("Hey! Pet doesn't have name.")
 
-    pets.update_one({"_id":id},{
-        "name":(data.get("name") or "").strip(),
-        "type":(data.get("type") or "").strip(),
-        "age":_normalize_age(data.get("age")),
-    })
+#We have to find the object
+    for pet in pets.find({}):
+        if str(pet["_id"]) == id:
+            pets.update_one(
+                {"_id": pet["_id"]},
+                {"$set": {
+                    "name": (data.get("name") or "").strip(),
+                    "type": (data.get("type") or "").strip(),
+                    "age": _normalize_age(data.get("age")),
+                }}
+            )
+
+
 
 def setup_test_database(db_file="test_mongita"):
     close_connection()
@@ -97,8 +105,8 @@ def test_get_pets():
     assert len(petAll) >= 1
     assert type(petAll[0]) is dict
     for key in ["id", "name", "type", "age"]:
-        assert key in pets[0]
-    assert type(pets[0]["name"]) is str
+        assert key in petAll[0]
+    assert type(petAll[0]["name"]) is str
 
 def test_create_pet_and_get_pet():
     new_id = create_pet({"name": "walter", "age": "2", "type": "mouse"})

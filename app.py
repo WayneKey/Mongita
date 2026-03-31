@@ -4,7 +4,7 @@ import database
 # remember to $ pip install flask
 # remember to $ pip install peewee
 
-database.initialize("pets.db")
+database.initialize("pets_data")
 
 app = Flask(__name__)
 
@@ -42,11 +42,11 @@ def post_create():
 
 @app.route("/delete/<id>", methods=["GET"])
 def get_delete(id):
-    try:
-        # Validate id early so ValueError doesn't become a 500.
-        int(id)
-    except ValueError:
-        return error_page("Error: pet id must be an integer.", 400)
+    # try:
+    #     # Validate id early so ValueError doesn't become a 500.
+    #     int(id)
+    # except ValueError:
+    #     return error_page("Error: pet id must be an integer.", 400)
 
     database.delete_pet(id)
     return redirect(url_for("get_list"))
@@ -54,10 +54,10 @@ def get_delete(id):
 
 @app.route("/update/<id>", methods=["GET"])
 def get_update(id):
-    try:
-        int(id)
-    except ValueError:
-        return error_page("Error: pet id must be an integer.", 400)
+    # try:
+    #     int(id)
+    # except ValueError:
+    #     return error_page("Error: pet id must be an integer.", 400)
 
     data = database.get_pet(id)
     if data is None:
@@ -67,10 +67,10 @@ def get_update(id):
 
 @app.route("/update/<id>", methods=["POST"])
 def post_update(id):
-    try:
-        int(id)
-    except ValueError:
-        return error_page("Error: pet id must be an integer.", 400)
+    # try:
+    #     int(id)
+    # except ValueError:
+    #     return error_page("Error: pet id must be an integer.", 400)
 
     data = dict(request.form)
     name = (data.get("name") or "").strip()
@@ -91,3 +91,6 @@ def health():
         return error_page("ok", 200)
     except Exception as e:
         return error_page(f"Error checking health: {e}", 500)
+
+if __name__ == "__main__":
+    app.run(debug=True)
