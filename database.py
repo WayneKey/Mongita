@@ -49,7 +49,7 @@ def create_pet(data):
         raise Exception("Hey! Pet doesn't have name.")
     if data["name"].strip()=="":
         raise Exception("Hey! Pet doesn't have name.")
-    ###################################################
+    
     pet = pets.insert_one({
         "name":(data.get("name") or "").strip(),
         "type":(data.get("type") or "").strip(),
@@ -65,7 +65,7 @@ def update_pet(id, data):
         raise Exception("Hey! Pet doesn't have name.")
     if data["name"].strip()=="":
         raise Exception("Hey! Pet doesn't have name.")
-    ###################################################
+
     pets.update_one({"_id":id},{
         "name":(data.get("name") or "").strip(),
         "type":(data.get("type") or "").strip(),
