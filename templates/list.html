@@ -1,11 +1,13 @@
 <html>
 <h3>Pets:</h3>
-<table>
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Type</th>
         <th>Age</th>
+        <th>Owner_id</th>
+        <th>Actions</th>
     </tr>
     {% for pet in pets %}
     <tr>
@@ -13,12 +15,40 @@
         <td>{{ pet['name'] }}</td>
         <td>{{ pet['type'] }}</td>
         <td>{{ pet['age'] }}</td>
-        <td><a href="/delete/{{pet['id']}}">Delete</a></td>
-        <td><a href="/update/{{pet['id']}}">Update</a></td>
+        <td>{{ pet['owner_id'] }}</td>
+        <td>
+            <a href="/delete/{{ pet['id'] }}">Delete</a>
+            <a href="/update/{{ pet['id'] }}">Update</a>
+        </td>
     </tr>
     {% endfor %}
 </table>
+
+<p><a href="/create">Create New Pet</a></p>
+
 <hr />
-<a href="/create">Create New Pet</a>
+
+<h3>Owners:</h3>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for owner in owners %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ owner['name'] }}</td>
+        <td>{{ owner['email'] }}</td>
+        <td>
+            <a href="/owners/delete/{{ owner['id'] }}">Delete</a>
+            <a href="/owners/update/{{ owner['id'] }}">Update</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p><a href="/owners/create">Create New Owner</a></p>
 
 </html>

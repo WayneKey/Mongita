@@ -1,0 +1,18 @@
+<html>
+
+<head></head>
+
+<body>
+    This is the update owner template.
+    <form action="/owners/update/{{ owner['id'] }}" method="post">
+        <hr />
+        <p>Name:<input name="name" value="{{ owner['name'] }}" /></p>
+        <p>Email:<input name="email" value="{{ owner['email'] }}" /></p>
+        <hr />
+        <button type="submit">Update</button>
+        <a href="/list">Cancel</a>
+        <hr />
+    </form>
+</body>
+
+</html>
