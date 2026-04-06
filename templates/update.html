@@ -12,7 +12,7 @@
 
         <label for="owner_id">Owner:</label>
         <select name="owner_id" id="owner_id">
-            <option value="">No owner</option>
+            <option value="">Homeless Pet</option>
             {% for owner in owners %}
             <option value="{{ owner.id }}" {% if pet.owner_id == owner.id %}selected{% endif %}>
                 {{ owner.name }} ({{ owner.email }})
